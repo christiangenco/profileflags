@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "fbp"
+    },
+    "fbp": {
+      "applicationId": "tWg9Yq18PaPhdyTFsavznGhyjqqrssoHBji9WWmj"
+    }
+  }
+}
