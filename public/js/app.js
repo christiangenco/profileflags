@@ -18,13 +18,14 @@ function blend(){
   canvas.width = width;
   canvas.height = height;
 
-  if(width===0) return;
+  console.dir(img2.src);
+  if(img1.src==='' || img2.src==='') return;
 
   var pixels = 4 * width * height;
   context.drawImage(img1, 0, 0);
   var image1 = context.getImageData(0, 0, width, height);
   var imageData1 = image1.data;
-  context.drawImage(img2, 0, 0);
+  context.drawImage(img2, 0, 0, width, height);
   var image2 = context.getImageData(0, 0, width, height);
   var imageData2 = image2.data;
   while (pixels--) {
