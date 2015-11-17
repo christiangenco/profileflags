@@ -1,7 +1,7 @@
 window.fbAsyncInit = function() {
   Parse.FacebookUtils.init({
     appId      : '189377341402438',
-    status     : true,
+    // status     : true,
     cookie     : true,
     xfbml      : true,
     version    : 'v2.5'
@@ -9,6 +9,7 @@ window.fbAsyncInit = function() {
 
   // Run code after the Facebook SDK is loaded.
   console.info("facebook sdk loaded");
+  $(window).trigger("facebookLoaded");
 };
 
 (function(d, s, id){
