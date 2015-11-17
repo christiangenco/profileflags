@@ -1,6 +1,18 @@
 window.T = {
-  profileimage: Handlebars.compile($("#profileimage-template").html())
+  profileimage: Handlebars.compile($("#profileimage-template").html()),
+  flag: Handlebars.compile($("#flag-template").html())
 }
+
+_.each(flags, function(flag){
+  $("#flags .list-group").append(T.flag(flag));
+});
+
+$("#flags").on("click", ".flag", function(e){
+  // e.currentTarget.attributes['data-full'].nodeValue;
+  var $f = $(e.currentTarget);
+  $(".flag").removeClass("active");
+  $f.addClass("active");
+});
 
 $("#fblogin").click(function(e){
   e.preventDefault();
