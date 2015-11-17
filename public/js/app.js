@@ -2,7 +2,7 @@ $("#fblogin").click(function(e){
   e.preventDefault();
   console.info("logging in through facebook");
 
-  Parse.FacebookUtils.logIn(null, {
+  Parse.FacebookUtils.logIn("email,publish_actions,user_photos", {
     success: function(user) {
       if (!user.existed()) {
         console.info("User signed up and logged in through Facebook!");
