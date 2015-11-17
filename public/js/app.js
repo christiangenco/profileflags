@@ -3,10 +3,6 @@ window.T = {
   flag: Handlebars.compile($("#flag-template").html())
 }
 
-_.each(flags, function(flag){
-  $("#flags .list-group").append(T.flag(flag));
-});
-
 $("#flags").on("click", ".flag", function(e){
   // e.currentTarget.attributes['data-full'].nodeValue;
   var $f = $(e.currentTarget);
@@ -37,13 +33,21 @@ $(window).on("facebookLoaded", function(){
     if(res && res.status === "connected")
       $(window).trigger("facebookConnected");
   });
+
+  _.each(flags, function(flag){
+    $("#flags .list-group").append(T.flag(flag));
+  });
 });
+
+$(window).on("facebookConnected", function(){
+  $("#fblogin").hide();
+})
 
 function displayImage(image){
   console.info("displaying ", image.id);
   image.full = image.images[0].source;
   console.dir(image);
-  $("#profileImages").append(T['profileimage'](image));
+  $("#profileImageContainer").append(T['profileimage'](image));
 }
 
 $("#profileImages").on("click", "a.profile", function(e){
