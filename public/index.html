@@ -12,6 +12,13 @@
         max-height: 400px;
         overflow-y: scroll;
       }
+
+      .profile:hover {
+        background-color: #ddd;
+      }
+      .profile.active {
+        background-color: #337ab7;
+      }
     </style>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -60,7 +67,9 @@
                 <div class="panel-heading">3. Preview</div>
 
                 <div class="panel-body fixed-panel" style="min-height: 345px; max-height: 345px">
-                  fdoinfds sdofjohisdfj
+                  <img id="profile" style="display: none">
+                  <img id="flag" style="display: none">
+                  <canvas id="canvas" style="width: 100%"></canvas>
                 </div>
 
                 <div class="panel-footer">
@@ -78,7 +87,7 @@
     </div>
 
     <script id="profileimage-template" type="text/x-handlebars-template">
-      <a href="#" class="profile col-xs-6" style="margin-bottom: 10px; text-align: center;" data-full="{{full}}">
+      <a href="#" class="profile col-xs-6" style="margin-bottom: 10px; text-align: center; min-height: 130px" data-full="{{full}}">
         <img src="{{picture}}" data-id="{{id}}" class="img-rounded">
       </a>
     </script>

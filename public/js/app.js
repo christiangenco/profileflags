@@ -3,11 +3,52 @@ window.T = {
   flag: Handlebars.compile($("#flag-template").html())
 }
 
+// blend images
+// http://stackoverflow.com/questions/3648312/blend-two-images-on-a-javascript-canvas
+// http://stackoverflow.com/questions/6765370/merge-image-using-javascript
+function blend(){
+  console.log('blending');
+  var img1 = document.getElementById('profile');
+  img1.crossOrigin = "Anonymous";
+  var img2 = document.getElementById('flag');
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+  var width = img1.width;
+  var height = img1.height;
+  canvas.width = width;
+  canvas.height = height;
+
+  if(width===0) return;
+
+  var pixels = 4 * width * height;
+  context.drawImage(img1, 0, 0);
+  var image1 = context.getImageData(0, 0, width, height);
+  var imageData1 = image1.data;
+  context.drawImage(img2, 0, 0);
+  var image2 = context.getImageData(0, 0, width, height);
+  var imageData2 = image2.data;
+  while (pixels--) {
+    imageData1[pixels] = imageData1[pixels] * 0.5 + imageData2[pixels] * 0.5;
+  }
+  image1.data = imageData1;
+  context.putImageData(image1, 0, 0);
+}
+
+function setProfile(src){
+  $("#profile").one('load', blend).attr('src', src);
+}
+
+function setFlag(src){
+  $("#flag").one('load', blend).attr('src', src);
+}
+
 $("#flags").on("click", ".flag", function(e){
   // e.currentTarget.attributes['data-full'].nodeValue;
+  e.preventDefault();
   var $f = $(e.currentTarget);
   $(".flag").removeClass("active");
   $f.addClass("active");
+  setFlag("/flags/" + $f.data('code') + ".png")
 });
 
 $("#fblogin").click(function(e){
@@ -44,16 +85,20 @@ $(window).on("facebookConnected", function(){
 })
 
 function displayImage(image){
-  console.info("displaying ", image.id);
+  // console.info("displaying ", image.id);
   image.full = image.images[0].source;
-  console.dir(image);
+  // console.dir(image);
   $("#profileImageContainer").append(T['profileimage'](image));
 }
 
 $("#profileImages").on("click", "a.profile", function(e){
   e.preventDefault();
-  console.dir(e);
-  console.log(e.currentTarget.attributes['data-full'].nodeValue);
+
+  $i = $(e.currentTarget);
+  $("a.profile").removeClass("active");
+  $i.addClass("active");
+  // e.currentTarget.attributes['data-full'].nodeValue
+  setProfile($i.data('full'));
 });
 
 $(window).on("facebookConnected", function(){
@@ -95,11 +140,7 @@ $(window).on("facebookConnected", function(){
   // );
 });
 
-// blend images
-// http://stackoverflow.com/questions/3648312/blend-two-images-on-a-javascript-canvas
-// http://stackoverflow.com/questions/6765370/merge-image-using-javascript
-
-$("#uploadphoto").click(function(e){
+$("#save").click(function(e){
   e.preventDefault();
   console.info("uploading photo");
 
