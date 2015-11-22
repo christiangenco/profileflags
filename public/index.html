@@ -1,7 +1,7 @@
 
 <html>
   <head>
-    <title>My ParseApp site</title>
+    <title>Profile Flags</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.css">
@@ -28,7 +28,9 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
     <script type="text/javascript">Parse.initialize("tWg9Yq18PaPhdyTFsavznGhyjqqrssoHBji9WWmj", "LMXz0ckVLSOMzteKa0RJHSKVenfyCHYmwuGcfrCr");</script>
+    <script type="text/javascript" src="js/base64.js"></script>
     <script type="text/javascript" src="js/fb.js"></script>
+    <script type="text/javascript" src="js/fbpost.js"></script>
     <script type="text/javascript" src="js/flags.js"></script>
   </head>
   <body>
@@ -67,8 +69,8 @@
                 <div class="panel-heading">3. Preview</div>
 
                 <div class="panel-body fixed-panel" style="min-height: 345px; max-height: 345px">
-                  <img id="profile" style="display: none">
-                  <img id="flag" style="display: none">
+                  <img id="profile" style="display: none" src="img/fb.jpg">
+                  <img id="flag" style="display: none" src="flags/af.png">
                   <canvas id="canvas" style="width: 100%"></canvas>
                 </div>
 

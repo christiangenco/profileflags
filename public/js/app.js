@@ -11,6 +11,7 @@ function blend(){
   var img1 = document.getElementById('profile');
   img1.crossOrigin = "Anonymous";
   var img2 = document.getElementById('flag');
+  img2.crossOrigin = "Anonymous";
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
   var width = img1.width;
@@ -34,6 +35,9 @@ function blend(){
   image1.data = imageData1;
   context.putImageData(image1, 0, 0);
 }
+
+$("#flag").one('load', blend).attr('src', 'flags/us.png');
+// $("#profile").one('load', blend);
 
 function setProfile(src){
   $("#profile").one('load', blend).attr('src', src);
@@ -63,6 +67,7 @@ $("#fblogin").click(function(e){
       } else {
         console.info("User logged in through Facebook!");
       }
+      $(window).trigger("facebookConnected");
     },
     error: function(user, error) {
       console.info("User cancelled the Facebook login or did not fully authorize.");
@@ -143,24 +148,46 @@ $(window).on("facebookConnected", function(){
 
 $("#save").click(function(e){
   e.preventDefault();
+  if(e.currentTarget.attributes.disabled) return;
+  $("#save").attr("disabled", true).text("saving...");
+  
   console.info("uploading photo");
 
   // post the photo data: 
   // https://gist.github.com/andyburke/1498758
   // if that doesn't work: http://stackoverflow.com/questions/21111893/upload-base64-image-facebook-graph-api-how-to-use-this-script/21145106#21145106
-  FB.api(
-    "/me/photos",
-    "POST",
-    {
-      url: "http://i.imgur.com/nIwusw9.png",
-      no_story: true
-    },
-    function(res) {
+  // FB.api(
+  //   "/me/photos",
+  //   "POST",
+  //   {
+  //     url: "http://i.imgur.com/nIwusw9.png",
+  //     no_story: true
+  //   },
+  //   function(res) {
+  //     console.dir(res);
+  //     if(res && !res.error) {
+  //       /* handle the result */
+  //       "http://www.facebook.com/photo.php?fbid=" + res.id + "&makeprofile=1";
+  //     }
+  //   }
+  // );
+  var canvas = document.getElementById("canvas");
+  var img = canvas.toDataURL("image/png")
+  var encoded = img.substring(img.indexOf(',')+1,img.length);
+  var decoded = Base64Binary.decode(encoded);
+
+  PostImageToFacebook(
+    FB.getAccessToken(),
+    "profileflag.jpg",
+    "image/png",
+    decoded,
+    "",//"Created by https://profileflags.parseapp.com",
+    function(res){
+      console.info("got res:")
       console.dir(res);
-      if(res && !res.error) {
-        /* handle the result */
-        "http://www.facebook.com/photo.php?fbid=" + res.id + "&makeprofile=1";
-      }
+      var url = "http://www.facebook.com/photo.php?fbid=" + res.id + "&makeprofile=1";
+      console.info("redirecting to ", url);
+      window.location = url;
     }
   );
 });
