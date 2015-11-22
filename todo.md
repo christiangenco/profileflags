@@ -1,4 +1,3 @@
-* add google analytics
 * add feedback form
 * figure out how to get all users (for email)
 * add url param for flag
