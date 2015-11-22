@@ -1,6 +1,4 @@
-* click photo to select it as active
-* select flag image
-* blend images
-* upload image OR figure out uploading data url
-* ???
-* PROFIT`
+* add feedback form
+* figure out how to get all users (for email)
+* add url param for flag
+* create combination flag -> email link to sites that complain about french flag
